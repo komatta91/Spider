@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <ResourceLoader.h>
+#include <glm\gtc\type_ptr.hpp>
 
 Shader::Shader(void) : program(0)
 {
@@ -39,6 +40,37 @@ void Shader::bindShader()
 {
 	glUseProgram(program);
 }
+
+void Shader::addUniform(std::string name)
+{
+	int uniform = glGetUniformLocation(program, name.c_str());
+	if (uniform == -1)
+	{
+		std::cout << "Error - invalid uniform name: " << name << std::endl;
+	}
+	uniforms[name] = uniform;
+}
+
+void Shader::setUniform(std::string name, int value)
+{
+	glUniform1i(uniforms[name], value);
+}
+
+void Shader::setUniform(std::string name, float value)
+{
+	glUniform1f(uniforms[name], value);
+}
+
+void Shader::setUniform(std::string name, glm::vec3 value)
+{
+	glUniform3f(uniforms[name], value.x, value.y, value.z);
+}
+
+void Shader::setUniform(std::string name, glm::mat4 value)
+{
+	glUniformMatrix4fv(uniforms[name], 1, GL_FALSE, glm::value_ptr(value));
+}
+
 
 void Shader::addShader(std::string file, int type)
 {

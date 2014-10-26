@@ -9,7 +9,7 @@ void RenderUtil::initGraphics()
 {
 	
 	glewInit();	
-	glClearColor(1.0f, 0.0f, 1.0f, 0.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
 	glFrontFace(GL_CW);
 	glEnable(GL_DEPTH_TEST);

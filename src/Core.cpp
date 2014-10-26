@@ -39,7 +39,6 @@ void Core::run()
 	while(running)
 	{
 		Timer::getInstance().tick();
-		KeyInput::getInstance().update();
 		game->input();
 		game->update();
 		render();

@@ -106,6 +106,7 @@ copy "D:\Programowanie\GKOM\GKOM\Tetris\lib\freeglut\bin\freeglut.dll" d:\Progra
     <ClCompile Include="src\Timer.cpp" />
     <ClCompile Include="src\Window.cpp" />
     <ClCompile Include="src\Vertex.cpp" />
+    <ClCompile Include="src\Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ResourceLoader.h" />
@@ -122,6 +123,7 @@ copy "D:\Programowanie\GKOM\GKOM\Tetris\lib\freeglut\bin\freeglut.dll" d:\Progra
     <ClInclude Include="src\typedefs.h" />
     <ClInclude Include="src\Window.h" />
     <ClInclude Include="src\Vertex.h" />
+    <ClInclude Include="src\Transform.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

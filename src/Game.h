@@ -3,6 +3,7 @@
 #include <GameKeyMapper.h>
 #include <Mesh.h>
 #include <Shader.h>
+#include <Transform.h>
 
 class Game
 {
@@ -17,5 +18,6 @@ public:
 private:
 	Mesh mesh;
 	Shader shader;
+	Transform transform;
 };
 

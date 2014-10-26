@@ -1,6 +1,9 @@
 #pragma once
+#include <glm\vec3.hpp>
+#include <glm\mat4x4.hpp>
 #include <GL\glew.h>
 #include <string>
+#include <map>
 class Shader
 {
 public:
@@ -11,8 +14,15 @@ public:
 	void addGeometryShader(std::string file);
 	void compileShader();
 	void bindShader();
+	void addUniform(std::string name);
+	void setUniform(std::string name, int value);
+	void setUniform(std::string name, float value);
+	void setUniform(std::string name, glm::vec3 value);
+	void setUniform(std::string name, glm::mat4 value);
 private:
 	int program;
+	std::map<std::string, int> uniforms;
+
 	void addShader(std::string file, int type);
 	void checkStatus(GLuint objectID,
 				 PFNGLGETSHADERIVPROC objectPropertyGetFunc,
