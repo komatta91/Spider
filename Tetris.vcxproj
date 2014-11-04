@@ -55,13 +55,13 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir)\lib\freeglut\include;$(ProjectDir)\src;$(ProjectDir)\lib\glm;$(ProjectDir)\lib\glew\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\lib\freeglut\include;$(ProjectDir)\src;$(ProjectDir)\lib\glm;$(ProjectDir)\lib\glew\include;$(ProjectDir)\lib\DevIL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)\lib\glut;$(ProjectDir)\lib\freeglut\lib;$(ProjectDir)lib\glew\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>freeglutd.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)\lib\glut;$(ProjectDir)\lib\freeglut\lib;$(ProjectDir)lib\glew\lib;$(ProjectDir)\lib\DevIL\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>freeglutd.lib;glew32.lib;DevIL.lib;ILU.lib;ILUT.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>copy "D:\Programowanie\GKOM\GKOM\Tetris\lib\freeglut\bin\freeglutd.dll" d:\Programowanie\GKOM\GKOM\Tetris\Debug\freeglut.dll
@@ -94,6 +94,11 @@ copy "D:\Programowanie\GKOM\GKOM\Tetris\lib\freeglut\bin\freeglut.dll" d:\Progra
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\PhongShader.cpp" />
+    <ClCompile Include="src\Material.cpp" />
+    <ClCompile Include="src\BasicShader.cpp" />
+    <ClCompile Include="src\Camera.cpp" />
+    <ClCompile Include="src\Imageloader.cpp" />
     <ClCompile Include="src\ResourceLoader.cpp" />
     <ClCompile Include="src\Shader.cpp" />
     <ClCompile Include="src\Mesh.cpp" />
@@ -107,8 +112,15 @@ copy "D:\Programowanie\GKOM\GKOM\Tetris\lib\freeglut\bin\freeglut.dll" d:\Progra
     <ClCompile Include="src\Window.cpp" />
     <ClCompile Include="src\Vertex.cpp" />
     <ClCompile Include="src\Transform.cpp" />
+    <ClCompile Include="src\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\PhongShader.h" />
+    <ClInclude Include="src\Material.h" />
+    <ClInclude Include="src\BasicShader.h" />
+    <ClInclude Include="src\Camera.h" />
+    <ClInclude Include="src\stb_image.h" />
+    <ClInclude Include="src\ImageLoader.h" />
     <ClInclude Include="src\ResourceLoader.h" />
     <ClInclude Include="src\Shader.h" />
     <ClInclude Include="src\Mesh.h" />
@@ -124,6 +136,7 @@ copy "D:\Programowanie\GKOM\GKOM\Tetris\lib\freeglut\bin\freeglut.dll" d:\Progra
     <ClInclude Include="src\Window.h" />
     <ClInclude Include="src\Vertex.h" />
     <ClInclude Include="src\Transform.h" />
+    <ClInclude Include="src\Texture.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

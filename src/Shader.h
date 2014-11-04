@@ -4,15 +4,17 @@
 #include <GL\glew.h>
 #include <string>
 #include <map>
+#include <Material.h>
 class Shader
 {
 public:
 	Shader(void);
-	~Shader(void);
+	virtual ~Shader(void);
 	void addVertexShader(std::string file);
 	void addFragmentShader(std::string file);
 	void addGeometryShader(std::string file);
 	void compileShader();
+	virtual void updateUniforms(glm::mat4& worldMatrix, glm::mat4& projectedMatrix, Material& material) = 0;
 	void bindShader();
 	void addUniform(std::string name);
 	void setUniform(std::string name, int value);

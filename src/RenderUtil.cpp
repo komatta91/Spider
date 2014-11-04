@@ -13,7 +13,8 @@ void RenderUtil::initGraphics()
 
 	glFrontFace(GL_CW);
 	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_FRAMEBUFFER_SRGB);
+	glEnable(GL_TEXTURE_2D);
+	//glEnable(GL_FRAMEBUFFER_SRGB);
 }
 
 void RenderUtil::clearScrean()

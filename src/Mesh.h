@@ -11,9 +11,11 @@ class Mesh
 public:
 	Mesh(void);
 	~Mesh(void);
-	void addVertices(std::vector<Vertex> &vertices, std::vector<int> &indices);
+	void addVertices(std::vector<Vertex> &vertices, std::vector<int> &indices, bool calcNormals = false);
 	void draw();
 private:
+	void calcNormals(std::vector<Vertex> &vertices, std::vector<int> &indices);
+
 	unsigned int vbo;
 	unsigned int ibo;
 	int size;

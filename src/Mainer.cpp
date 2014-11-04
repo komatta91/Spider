@@ -26,7 +26,7 @@ int main(int argc, char* argv[])
 	window.createWindow(WIDTH, HEIGHT, TITLE);
 	Core core(&window, &game);
 	core.start();
-	system("pause");
+	//system("pause");
 	return 0;
 }
 
