@@ -33,7 +33,12 @@ private:
 
 	Mesh meshSpiderHead;
 	Transform transSpiderHead;
-	Material* matSpider;
+	Material* matSpiderLeg1;
+	Material* matSpiderLeg2;
+	Material* matSpiderLeg3;
+	Material* matSpiderHead;
+	Material* matSpiderAbdomen;
+	Material* matSpiderEye;
 
 	Mesh meshSpiderAbdomen;
 	Transform transSpiderAbdomen;
@@ -68,6 +73,12 @@ private:
 	Transform transSpiderLeg36;
 	Transform transSpiderLeg37;
 	Transform transSpiderLeg38;
+
+
+	Transform transSpiderEye1;
+	Transform transSpiderEye2;
+	Transform transSpiderEye3;
+	Transform transSpiderEye4;
 	//Material* matSpiderLeg1;
 
 	std::vector<std::pair<Transform, Mesh>> spider;

@@ -92,6 +92,11 @@ Vertex Vertices[4] = { Vertex(Vector3f(-1.0f, -1.0f, 0.5773f), Vector2f(0.0f, 0.
 	transSpiderLeg37.setProjection(0.1f, 1000.0f, 800.0f, 600.0f, 70.0f);
 	transSpiderLeg38.setProjection(0.1f, 1000.0f, 800.0f, 600.0f, 70.0f);
 
+	transSpiderEye1.setProjection(0.1f, 1000.0f, 800.0f, 600.0f, 70.0f);
+	transSpiderEye2.setProjection(0.1f, 1000.0f, 800.0f, 600.0f, 70.0f);
+	transSpiderEye3.setProjection(0.1f, 1000.0f, 800.0f, 600.0f, 70.0f);
+	transSpiderEye4.setProjection(0.1f, 1000.0f, 800.0f, 600.0f, 70.0f);
+
 	GeometryGenerator generator;
 	GeometryGenerator::MeshData data;
 	std::vector<Vertex> vertices;
@@ -245,14 +250,21 @@ Vertex Vertices[4] = { Vertex(Vector3f(-1.0f, -1.0f, 0.5773f), Vector2f(0.0f, 0.
 	glm::vec3 color(1.0f, 1.0f, 1.0f);
 	static_cast<PhongShader*>(shader)->setAmbientLight(glm::vec3(0.2f, 0.2f, 0.2f));
 
-	BaseLight base(glm::vec3(1,1,1), 0.3);
+	BaseLight base(glm::vec3(1,1,0), 0.5);
 	//DirectionalLight light(base, glm::vec3(0.49,-0.51,-0.710));
 	DirectionalLight light(base, glm::vec3( 0, -1, 0));
 	static_cast<PhongShader*>(shader)->setDirectionalLight(light);
 
 	matFloor = new Material("podloga.bmp", color, 1, 64);
-	matSky = new Material("chmury.bmp", color);
-	matSpider = new Material("white.bmp", color, 0.5, 64);
+	matSky = new Material("yYz0b.bmp", color);
+	
+	matSpiderLeg1 = new Material("leg.bmp", color, 0.5, 64);
+	matSpiderLeg2 = new Material("knee.bmp", color, 0.5, 64);
+	matSpiderLeg3 = new Material("leg1.bmp", color, 0.5, 64);
+	matSpiderAbdomen = new Material("abdomen.bmp", color, 0.5, 64);
+	matSpiderHead = new Material("head.bmp", color, 0.5, 64);
+	matSpiderEye = new Material("black.bmp", color, 16, 256);
+
 	camera.muve(glm::vec3(0,1,40), 1.5);
 	
 	//material = new Material(color);
@@ -321,14 +333,14 @@ void Game::update()
 	//transform2.setScale(0.45f, 0.45f, 0.45f);
 	//transSky.setRotation(0, 0, 180);
 
-	transFloor.setTranslation(0.0f, -5.0f, 0);
+	transFloor.setTranslation(0.0f, -1.0f, 0);
 	//transform.setScale(0.45f, 0.45f, 0.45f);
 	
-	transSpiderHead.setTranslation(0.0f, 5.0f, 0);
+	transSpiderHead.setTranslation(0.0f, 7.0f, 0);
 	transSpiderHead.setScale(0.8f, 0.6f, 1.3f);
 	//transSpider.setRotation(0, 0, 180);
 
-	transSpiderAbdomen.setTranslation(1.0f, 8.0f, -20);
+	transSpiderAbdomen.setTranslation(1.0f, 10.0f, -20);
 	transSpiderAbdomen.setScale(1.1f, 1.1f, 1.6f);
 	//transSpiderAbdomen.setRotation(0, 0, 180);
 
@@ -388,7 +400,7 @@ void Game::update()
 	transSpiderLeg26.setScale(1.2f, 1.2f, 1.2f);
 	//transSpiderLeg26.setRotation(0, -20, -70);
 
-	transSpiderLeg27.setTranslation(28.5f, 14.6f, -3.1);
+	transSpiderLeg27.setTranslation(28.5f, 14.4f, -3.1);
 	transSpiderLeg27.setScale(1.2f, 1.2f, 1.2f);
 	//transSpiderLeg27.setRotation(0, -20, -70);
 
@@ -400,6 +412,52 @@ void Game::update()
 	transSpiderLeg31.setTranslation(-47.5f, 6.6f, 21.5f);
 	transSpiderLeg31.setScale(1.0f,3.0f, 1.0f);
 	transSpiderLeg31.setRotation(0, 20,290);
+
+	transSpiderLeg32.setTranslation(-49.5f, 6.7f, 6.8f);
+	transSpiderLeg32.setScale(1.0f,3.0f, 1.0f);
+	transSpiderLeg32.setRotation(0, 5,290);
+
+	transSpiderLeg33.setTranslation(-49.5f, 6.7f, -7.8f);
+	transSpiderLeg33.setScale(1.0f,3.0f, 1.0f);
+	transSpiderLeg33.setRotation(0, -10,290);
+
+	transSpiderLeg34.setTranslation(-47.5f, 6.6f, -19.3f);
+	transSpiderLeg34.setScale(1.0f,3.0f, 1.0f);
+	transSpiderLeg34.setRotation(0, -20,290);
+
+
+	transSpiderLeg35.setTranslation(47.5f, 6.6f, 21.5f);
+	transSpiderLeg35.setScale(1.0f,3.0f, 1.0f);
+	transSpiderLeg38.setRotation(0, 20,70);
+
+	transSpiderLeg36.setTranslation(49.5f, 6.7f, 9.8f);
+	transSpiderLeg36.setScale(1.0f,3.0f, 1.0f);
+	transSpiderLeg37.setRotation(0, 5,70);
+
+	transSpiderLeg37.setTranslation(49.5f, 6.7f, -5.0f);
+	transSpiderLeg37.setScale(1.0f,3.0f, 1.0f);
+	transSpiderLeg36.setRotation(0, -10,70);
+
+	transSpiderLeg38.setTranslation(47.5f, 6.6f, -19.3f);
+	transSpiderLeg38.setScale(1.0f,3.0f, 1.0f);
+	transSpiderLeg35.setRotation(0, -20,70);
+
+	transSpiderEye1.setTranslation(1.5f, 10.1f, 10.5f);
+	transSpiderEye1.setScale(0.7f, 0.7f, 0.7f);
+	//transSpiderEye1.setRotation(0, 20,70);
+
+	transSpiderEye2.setTranslation(-1.5f, 10.1f, 10.5f);
+	transSpiderEye2.setScale(0.7f, 0.7f, 0.7f);
+	//transSpiderEye2.setRotation(0, 5,70);
+
+	transSpiderEye3.setTranslation(3.0f, 10.3f, 9.5f);
+	transSpiderEye3.setScale(0.5f, 0.5f, 0.5f);
+	//transSpiderEye3.setRotation(0, 20,70);
+
+	transSpiderEye4.setTranslation(-3.0f, 10.3f, 9.5f);
+	transSpiderEye4.setScale(0.5f, 0.5f, 0.5f);
+	//transSpiderEye4.setRotation(0, 5,70);
+
 
 	//BaseLight base(glm::vec3(1,1,1), 1);
 	//DirectionalLight light(base, camera.getForward());
@@ -420,62 +478,93 @@ void Game::render()
 	shader->updateUniforms(transSky.getTransformation(), transSky.getProjectionTransformation(camera.lookAt()), camera.getPos(), *matSky);
 	meshSky.draw();
 
-	shader->updateUniforms(transSpiderHead.getTransformation(), transSpiderHead.getProjectionTransformation(camera.lookAt()), camera.getPos(), *matSpider);
+	shader->updateUniforms(transSpiderHead.getTransformation(), transSpiderHead.getProjectionTransformation(camera.lookAt()), camera.getPos(), *matSpiderHead);
 	meshSpiderHead.draw();
 
-	shader->updateUniforms(transSpiderAbdomen.getTransformation(), transSpiderAbdomen.getProjectionTransformation(camera.lookAt()), camera.getPos(), *matSpider);
+	shader->updateUniforms(transSpiderAbdomen.getTransformation(), transSpiderAbdomen.getProjectionTransformation(camera.lookAt()), camera.getPos(), *matSpiderAbdomen);
 	meshSpiderAbdomen.draw();
 
-	shader->updateUniforms(transSpiderLeg11.getTransformation(), transSpiderLeg11.getProjectionTransformation(camera.lookAt()), camera.getPos(), *matSpider);
+	shader->updateUniforms(transSpiderLeg11.getTransformation(), transSpiderLeg11.getProjectionTransformation(camera.lookAt()), camera.getPos(), *matSpiderLeg1);
 	meshSpiderLeg1.draw();
 
-	shader->updateUniforms(transSpiderLeg12.getTransformation(), transSpiderLeg12.getProjectionTransformation(camera.lookAt()), camera.getPos(), *matSpider);
+	shader->updateUniforms(transSpiderLeg12.getTransformation(), transSpiderLeg12.getProjectionTransformation(camera.lookAt()), camera.getPos(), *matSpiderLeg1);
 	meshSpiderLeg1.draw();
 
-	shader->updateUniforms(transSpiderLeg13.getTransformation(), transSpiderLeg13.getProjectionTransformation(camera.lookAt()), camera.getPos(), *matSpider);
+	shader->updateUniforms(transSpiderLeg13.getTransformation(), transSpiderLeg13.getProjectionTransformation(camera.lookAt()), camera.getPos(), *matSpiderLeg1);
 	meshSpiderLeg1.draw();
 
-	shader->updateUniforms(transSpiderLeg14.getTransformation(), transSpiderLeg14.getProjectionTransformation(camera.lookAt()), camera.getPos(), *matSpider);
+	shader->updateUniforms(transSpiderLeg14.getTransformation(), transSpiderLeg14.getProjectionTransformation(camera.lookAt()), camera.getPos(), *matSpiderLeg1);
 	meshSpiderLeg1.draw();
 
-	shader->updateUniforms(transSpiderLeg15.getTransformation(), transSpiderLeg15.getProjectionTransformation(camera.lookAt()), camera.getPos(), *matSpider);
+	shader->updateUniforms(transSpiderLeg15.getTransformation(), transSpiderLeg15.getProjectionTransformation(camera.lookAt()), camera.getPos(), *matSpiderLeg1);
 	meshSpiderLeg1.draw();
 
-	shader->updateUniforms(transSpiderLeg16.getTransformation(), transSpiderLeg16.getProjectionTransformation(camera.lookAt()), camera.getPos(), *matSpider);
+	shader->updateUniforms(transSpiderLeg16.getTransformation(), transSpiderLeg16.getProjectionTransformation(camera.lookAt()), camera.getPos(), *matSpiderLeg1);
 	meshSpiderLeg1.draw();
 
-	shader->updateUniforms(transSpiderLeg17.getTransformation(), transSpiderLeg17.getProjectionTransformation(camera.lookAt()), camera.getPos(), *matSpider);
+	shader->updateUniforms(transSpiderLeg17.getTransformation(), transSpiderLeg17.getProjectionTransformation(camera.lookAt()), camera.getPos(), *matSpiderLeg1);
 	meshSpiderLeg1.draw();
 
-	shader->updateUniforms(transSpiderLeg18.getTransformation(), transSpiderLeg18.getProjectionTransformation(camera.lookAt()), camera.getPos(), *matSpider);
+	shader->updateUniforms(transSpiderLeg18.getTransformation(), transSpiderLeg18.getProjectionTransformation(camera.lookAt()), camera.getPos(), *matSpiderLeg1);
 	meshSpiderLeg1.draw();
 
-	shader->updateUniforms(transSpiderLeg21.getTransformation(), transSpiderLeg21.getProjectionTransformation(camera.lookAt()), camera.getPos(), *matSpider);
+	shader->updateUniforms(transSpiderLeg21.getTransformation(), transSpiderLeg21.getProjectionTransformation(camera.lookAt()), camera.getPos(), *matSpiderLeg2);
 	meshSpiderLeg2.draw();
 
-	shader->updateUniforms(transSpiderLeg22.getTransformation(), transSpiderLeg22.getProjectionTransformation(camera.lookAt()), camera.getPos(), *matSpider);
+	shader->updateUniforms(transSpiderLeg22.getTransformation(), transSpiderLeg22.getProjectionTransformation(camera.lookAt()), camera.getPos(), *matSpiderLeg2);
 	meshSpiderLeg2.draw();
 
-	shader->updateUniforms(transSpiderLeg23.getTransformation(), transSpiderLeg23.getProjectionTransformation(camera.lookAt()), camera.getPos(), *matSpider);
+	shader->updateUniforms(transSpiderLeg23.getTransformation(), transSpiderLeg23.getProjectionTransformation(camera.lookAt()), camera.getPos(), *matSpiderLeg2);
 	meshSpiderLeg2.draw();
 
-	shader->updateUniforms(transSpiderLeg24.getTransformation(), transSpiderLeg24.getProjectionTransformation(camera.lookAt()), camera.getPos(), *matSpider);
+	shader->updateUniforms(transSpiderLeg24.getTransformation(), transSpiderLeg24.getProjectionTransformation(camera.lookAt()), camera.getPos(), *matSpiderLeg2);
 	meshSpiderLeg2.draw();
 
-	shader->updateUniforms(transSpiderLeg25.getTransformation(), transSpiderLeg25.getProjectionTransformation(camera.lookAt()), camera.getPos(), *matSpider);
+	shader->updateUniforms(transSpiderLeg25.getTransformation(), transSpiderLeg25.getProjectionTransformation(camera.lookAt()), camera.getPos(), *matSpiderLeg2);
 	meshSpiderLeg2.draw();
 
-	shader->updateUniforms(transSpiderLeg26.getTransformation(), transSpiderLeg26.getProjectionTransformation(camera.lookAt()), camera.getPos(), *matSpider);
+	shader->updateUniforms(transSpiderLeg26.getTransformation(), transSpiderLeg26.getProjectionTransformation(camera.lookAt()), camera.getPos(), *matSpiderLeg2);
 	meshSpiderLeg2.draw();
 
-	shader->updateUniforms(transSpiderLeg27.getTransformation(), transSpiderLeg27.getProjectionTransformation(camera.lookAt()), camera.getPos(), *matSpider);
+	shader->updateUniforms(transSpiderLeg27.getTransformation(), transSpiderLeg27.getProjectionTransformation(camera.lookAt()), camera.getPos(), *matSpiderLeg2);
 	meshSpiderLeg2.draw();
 
-	shader->updateUniforms(transSpiderLeg28.getTransformation(), transSpiderLeg28.getProjectionTransformation(camera.lookAt()), camera.getPos(), *matSpider);
+	shader->updateUniforms(transSpiderLeg28.getTransformation(), transSpiderLeg28.getProjectionTransformation(camera.lookAt()), camera.getPos(), *matSpiderLeg2);
 	meshSpiderLeg2.draw();
 
-	shader->updateUniforms(transSpiderLeg31.getTransformation(), transSpiderLeg31.getProjectionTransformation(camera.lookAt()), camera.getPos(), *matSpider);
+	shader->updateUniforms(transSpiderLeg31.getTransformation(), transSpiderLeg31.getProjectionTransformation(camera.lookAt()), camera.getPos(), *matSpiderLeg3);
 	meshSpiderLeg3.draw();
 
-	std::cout << camera.getPos().x << ", " << camera.getPos().y << ", " << camera.getPos().z << std::endl;
+	shader->updateUniforms(transSpiderLeg32.getTransformation(), transSpiderLeg32.getProjectionTransformation(camera.lookAt()), camera.getPos(), *matSpiderLeg3);
+	meshSpiderLeg3.draw();
+
+	shader->updateUniforms(transSpiderLeg33.getTransformation(), transSpiderLeg33.getProjectionTransformation(camera.lookAt()), camera.getPos(), *matSpiderLeg3);
+	meshSpiderLeg3.draw();
+
+	shader->updateUniforms(transSpiderLeg34.getTransformation(), transSpiderLeg34.getProjectionTransformation(camera.lookAt()), camera.getPos(), *matSpiderLeg3);
+	meshSpiderLeg3.draw();
+
+	shader->updateUniforms(transSpiderLeg35.getTransformation(), transSpiderLeg35.getProjectionTransformation(camera.lookAt()), camera.getPos(), *matSpiderLeg3);
+	meshSpiderLeg3.draw();
+
+	shader->updateUniforms(transSpiderLeg36.getTransformation(), transSpiderLeg36.getProjectionTransformation(camera.lookAt()), camera.getPos(), *matSpiderLeg3);
+	meshSpiderLeg3.draw();
+
+	shader->updateUniforms(transSpiderLeg37.getTransformation(), transSpiderLeg37.getProjectionTransformation(camera.lookAt()), camera.getPos(), *matSpiderLeg3);
+	meshSpiderLeg3.draw();
+
+	shader->updateUniforms(transSpiderLeg38.getTransformation(), transSpiderLeg38.getProjectionTransformation(camera.lookAt()), camera.getPos(), *matSpiderLeg3);
+	meshSpiderLeg3.draw();
+
+	shader->updateUniforms(transSpiderEye1.getTransformation(), transSpiderEye1.getProjectionTransformation(camera.lookAt()), camera.getPos(), *matSpiderEye);
+	meshSpiderLeg2.draw();
+
+	shader->updateUniforms(transSpiderEye2.getTransformation(), transSpiderEye2.getProjectionTransformation(camera.lookAt()), camera.getPos(), *matSpiderEye);
+	meshSpiderLeg2.draw();
+
+	shader->updateUniforms(transSpiderEye3.getTransformation(), transSpiderEye3.getProjectionTransformation(camera.lookAt()), camera.getPos(), *matSpiderEye);
+	meshSpiderLeg2.draw();
+
+	shader->updateUniforms(transSpiderEye4.getTransformation(), transSpiderEye4.getProjectionTransformation(camera.lookAt()), camera.getPos(), *matSpiderEye);
+	meshSpiderLeg2.draw();
 }
