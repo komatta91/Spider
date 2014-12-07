@@ -2,14 +2,14 @@
 #include <ResourceLoader.h>
 
 
-Material::Material(std::string filename, glm::vec3 color) : color(color)
+Material::Material(std::string filename, glm::vec3 color, float specularIntensity, float specularPower) : color(color) , specularPower(specularPower), specularIntensity(specularIntensity)
 {
 	ResourceLoader::loadTexture(filename, texture);
 }
 
 Material::Material(glm::vec3 color) : color(color)
 {
-	ResourceLoader::generateWhiteTexture(texture);
+	ResourceLoader::loadTexture("white1x1.bmp", texture);
 }
 
 

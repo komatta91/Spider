@@ -61,16 +61,33 @@ void Mesh::draw()
 
 void Mesh::calcNormals(std::vector<Vertex> &vertices, std::vector<int> &indices)
 {
+	//TODO do zmiany obliczanie normalnych
 	for (int i = 0; i < indices.size(); i += 3)
 	{
 		int i0 = indices[i];
 		int i1 = indices[i + 1];
 		int i2 = indices[i + 2];
 
-		glm::vec3 normal =  glm::normalize(glm::cross(vertices[i2].getPos() - vertices[i0].getPos(), vertices[i1].getPos() - vertices[i0].getPos()));
+		glm::vec3 p0 = vertices[i0].getPos();
+		glm::vec3 p1 = vertices[i1].getPos();
+		glm::vec3 p2 = vertices[i2].getPos();
 
-		vertices[i0].setNormal( glm::normalize(vertices[i0].getNormal() + normal));
-		vertices[i1].setNormal(glm::normalize(vertices[i1].getNormal() + normal));
-		vertices[i2].setNormal(glm::normalize(vertices[i1].getNormal() + normal));
+		glm::vec3 t1 = p1 - p0;
+
+		glm::vec3 t2 = p2 - p0;
+
+		//glm::vec3 normal =  glm::normalize(glm::cross(t2, t1));
+
+		glm::vec3 normal =  glm::cross(t2, t1);
+
+		vertices[i0].setNormal(vertices[i0].getNormal() + normal);
+		vertices[i1].setNormal(vertices[i1].getNormal() + normal);
+		vertices[i2].setNormal(vertices[i1].getNormal() + normal);
+	}
+
+	for (int i = 0; i < vertices.size(); ++i)
+	{
+		vertices[i].setNormal(glm::normalize(vertices[i].getPos()));
+		//vertices[i].setNormal(glm::normalize(vertices[i].getNormal()));
 	}
 }

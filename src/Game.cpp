@@ -27,6 +27,8 @@
 
 #include <glm\mat4x4.hpp>
 
+#include <GeometryGenerator.h>
+
 Game::Game(void)
 {
 	KeyInput::getInstance().initialize(&gameKeyMapper, gameKeyMapper.getMaxActon());
@@ -38,11 +40,10 @@ void Game::init()
 
 	shader = new PhongShader();
 
-	std::vector<Vertex> vertices;
-	vertices.push_back(Vertex(glm::vec3(-1.0f, -1.0f, 0.5773f), glm::vec2(1.0f, 0.0f)));
-	vertices.push_back(Vertex(glm::vec3(0.0f, -1.0f, -1.15475f), glm::vec2(1.0f, 1.0f)));
-	vertices.push_back(Vertex(glm::vec3(1.0f, -1.0f, 0.5773f), glm::vec2(1.0f, 0.0f)));
-	vertices.push_back(Vertex(glm::vec3(0.0f, 1.0f, 0.0f), glm::vec2(0.0f, 1.0f)));
+	//vertices.push_back(Vertex(glm::vec3(-1.0f, -1.0f, 0.5773f), glm::vec2(1.0f, 0.0f)));
+	//vertices.push_back(Vertex(glm::vec3(0.0f, -1.0f, -1.15475f), glm::vec2(1.0f, 1.0f)));
+	//vertices.push_back(Vertex(glm::vec3(1.0f, -1.0f, 0.5773f), glm::vec2(1.0f, 0.0f)));
+	//vertices.push_back(Vertex(glm::vec3(0.0f, 1.0f, 0.0f), glm::vec2(0.0f, 1.0f)));
 	/*
 Vertex Vertices[4] = { Vertex(Vector3f(-1.0f, -1.0f, 0.5773f), Vector2f(0.0f, 0.0f)),
                            Vertex(Vector3f(0.0f, -1.0f, -1.15475f), Vector2f(0.5f, 0.0f)),
@@ -54,15 +55,107 @@ Vertex Vertices[4] = { Vertex(Vector3f(-1.0f, -1.0f, 0.5773f), Vector2f(0.0f, 0.
                                2, 3, 0,
                                0, 1, 2 };
 	*/
+	//indices.push_back(0); indices.push_back(3); indices.push_back(1);
+	//indices.push_back(1); indices.push_back(3); indices.push_back(2);
+	//indices.push_back(2); indices.push_back(3); indices.push_back(0);
+	//indices.push_back(0); indices.push_back(1); indices.push_back(2);
 
+	transSky.setProjection(0.1f, 1000.0f, 800.0f, 600.0f, 70.0f); 
+	transFloor.setProjection(0.1f, 1000.0f, 800.0f, 600.0f, 70.0f);
+	transSpiderHead.setProjection(0.1f, 1000.0f, 800.0f, 600.0f, 70.0f);
+	transSpiderAbdomen.setProjection(0.1f, 1000.0f, 800.0f, 600.0f, 70.0f);
+
+	GeometryGenerator generator;
+	GeometryGenerator::MeshData data;
+	std::vector<Vertex> vertices;
 	std::vector<int> indices;
-	indices.push_back(0); indices.push_back(3); indices.push_back(1);
-	indices.push_back(1); indices.push_back(3); indices.push_back(2);
-	indices.push_back(2); indices.push_back(3); indices.push_back(0);
-	indices.push_back(0); indices.push_back(1); indices.push_back(2);
+	
+	//generator.CreateBox(1, 1, 1, data);
+	//generator.CreateGeosphere(300, 1000, data);
+	generator.CreateGrid(200,200,2,2,data);
+	for(int i = 0; i < data.Vertices.size(); ++i)
+	{
+		Vertex v(data.Vertices[i].Position, data.Vertices[i].TexC, data.Vertices[i].Normal);
+		vertices.push_back(v);
+	}
+	for (int i = 0; i < data.Indices.size(); ++i)
+	{
+		indices.push_back(data.Indices[i]);
+	}
 
-	transform.Transform::setProjection(0.1f, 1000.0f, 800.0f, 600.0f, 70.0f); 
+	meshFloor.addVertices(vertices, indices);
 
+	data = GeometryGenerator::MeshData();
+	vertices.clear();
+	indices.clear();
+
+	generator.CreateSphere(100, 100, 100, data);
+	for(int i = 0; i < data.Vertices.size(); ++i)
+	{
+		Vertex v(data.Vertices[i].Position, data.Vertices[i].TexC, data.Vertices[i].Normal);
+		vertices.push_back(v);
+	}
+	for (int i = 0; i < data.Indices.size(); ++i)
+	{
+		indices.push_back(data.Indices[i]);
+	}
+
+	meshSky.addVertices(vertices, indices);
+
+
+	data = GeometryGenerator::MeshData();
+	vertices.clear();
+	indices.clear();
+
+	generator.CreateGeosphere(10, 10, data);
+	for(int i = 0; i < data.Vertices.size(); ++i)
+	{
+		Vertex v(data.Vertices[i].Position, data.Vertices[i].TexC, data.Vertices[i].Normal);
+		vertices.push_back(v);
+	}
+	for (int i = 0; i < data.Indices.size(); ++i)
+	{
+		indices.push_back(data.Indices[i]);
+	}
+
+	meshSpiderHead.addVertices(vertices, indices);
+
+	data = GeometryGenerator::MeshData();
+	vertices.clear();
+	indices.clear();
+
+	generator.CreateGeosphere(10, 10, data);
+	for(int i = 0; i < data.Vertices.size(); ++i)
+	{
+		Vertex v(data.Vertices[i].Position, data.Vertices[i].TexC, data.Vertices[i].Normal);
+		vertices.push_back(v);
+	}
+	for (int i = 0; i < data.Indices.size(); ++i)
+	{
+		indices.push_back(data.Indices[i]);
+	}
+
+	meshSpiderHead.addVertices(vertices, indices);
+
+	//SpideaA
+	data = GeometryGenerator::MeshData();
+	vertices.clear();
+	indices.clear();
+
+	generator.CreateGeosphere(10, 10, data);
+	for(int i = 0; i < data.Vertices.size(); ++i)
+	{
+		Vertex v(data.Vertices[i].Position, data.Vertices[i].TexC, data.Vertices[i].Normal);
+		vertices.push_back(v);
+	}
+	for (int i = 0; i < data.Indices.size(); ++i)
+	{
+		indices.push_back(data.Indices[i]);
+	}
+
+	meshSpiderAbdomen.addVertices(vertices, indices);
+
+	//parse(mesh, data);
 
 	//ResourceLoader::loadMesh("cube.obj", mesh);
 	//std::cout << sizeof(Vertex);
@@ -75,11 +168,20 @@ Vertex Vertices[4] = { Vertex(Vector3f(-1.0f, -1.0f, 0.5773f), Vector2f(0.0f, 0.
 	//Mesh temp;
 	//temp.addVertices(vertices, indices);
 	//mesh = temp;
-	mesh.addVertices(vertices, indices, true);
-
+	//
 	glm::vec3 color(1.0f, 1.0f, 1.0f);
-	static_cast<PhongShader*>(shader)->setAmbientLight(glm::vec3(0.5f, 0.5f, 1.0f));
-	material = new Material("kotek.bmp", color);
+	static_cast<PhongShader*>(shader)->setAmbientLight(glm::vec3(0.2f, 0.2f, 0.2f));
+
+	BaseLight base(glm::vec3(1,1,1), 0.3);
+	//DirectionalLight light(base, glm::vec3(0.49,-0.51,-0.710));
+	DirectionalLight light(base, glm::vec3( 0, -1, 0));
+	static_cast<PhongShader*>(shader)->setDirectionalLight(light);
+
+	matFloor = new Material("podloga.bmp", color, 1, 128);
+	matSky = new Material("chmury.bmp", color);
+	matSpider = new Material("white.bmp", color);
+	camera.muve(glm::vec3(0,1,40), 1.5);
+	
 	//material = new Material(color);
 }
 
@@ -140,9 +242,26 @@ void Game::input()
 void Game::update()
 {
 	//std::cout << (glm::sin(scale) * - 100) << std::endl;
-	transform.setTranslation(0.0f, 0.0f, -5);
-	transform.setScale(0.45f, 0.45f, 0.45f);
-	//transform.setRotation(0, glm::sin(scale) * 180, 0.0f);
+	scale += Timer::getInstance().deltaTime();
+
+	//transSky.setTranslation(0.0f, 0.0f, 0);
+	//transform2.setScale(0.45f, 0.45f, 0.45f);
+	//transSky.setRotation(0, 0, 180);
+
+	transFloor.setTranslation(0.0f, -5.0f, 0);
+	//transform.setScale(0.45f, 0.45f, 0.45f);
+	
+	transSpiderHead.setTranslation(0.0f, 5.0f, 0);
+	transSpiderHead.setScale(0.8f, 0.6f, 1.3f);
+	//transSpider.setRotation(0, 0, 180);
+
+	transSpiderAbdomen.setTranslation(1.0f, 8.0f, 20);
+	transSpiderAbdomen.setScale(1.1f, 1.1f, 1.6f);
+	//transSpiderAbdomen.setRotation(0, 0, 180);
+
+	//BaseLight base(glm::vec3(1,1,1), 1);
+	//DirectionalLight light(base, camera.getForward());
+	//static_cast<PhongShader*>(shader)->setDirectionalLight(light);
 
 	camera.muve(additionPos, Timer::getInstance().deltaTime() * 10);
 	camera.rotateX(amountX * 100);
@@ -154,7 +273,16 @@ void Game::render()
 	shader->bindShader();
 	
 	//glm::mat4 res = camera.lookAt();
- 	shader->updateUniforms(transform.getTransformation(), transform.getProjectionTransformation(camera.lookAt()), *material);
+	shader->updateUniforms(transFloor.getTransformation(), transFloor.getProjectionTransformation(camera.lookAt()), camera.getPos(), *matFloor);
 	//shader.setUniform("transform", transform.getProjectionTransformation(glm::mat4(1.0f)));
-	mesh.draw();
+	meshFloor.draw();
+
+	shader->updateUniforms(transSky.getTransformation(), transSky.getProjectionTransformation(camera.lookAt()), camera.getPos(), *matSky);
+	meshSky.draw();
+
+	shader->updateUniforms(transSpiderHead.getTransformation(), transSpiderHead.getProjectionTransformation(camera.lookAt()), camera.getForward(), *matSpider);
+	meshSpiderHead.draw();
+
+	shader->updateUniforms(transSpiderAbdomen.getTransformation(), transSpiderAbdomen.getProjectionTransformation(camera.lookAt()), camera.getForward(), *matSpider);
+	meshSpiderAbdomen.draw();
 }

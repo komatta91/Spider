@@ -54,9 +54,9 @@ void ResourceLoader::loadMesh(std::string file, Mesh& mesh)
 				iss >> y;
 				iss >> z;
 				glm::vec3 vec(x, y, z);
-				Vertex v(vec, glm::vec2(std::abs(x), std::abs(y)));
+				Vertex v(vec, glm::vec2(glm::abs(x), glm::abs(y)));
 				vertices.push_back(v);
-				std::cout << "textCord: " << v.getTextCord().x << ", " << v.getTextCord().y << std::endl;
+				//std::cout << "textCord: " << v.getTextCord().x << ", " << v.getTextCord().y << std::endl;
 				
 			}
 			if (line[0] == 'f')
@@ -78,7 +78,7 @@ void ResourceLoader::loadMesh(std::string file, Mesh& mesh)
 			}
 		}
 		myfile.close();
-		mesh.addVertices(vertices, indices);
+		mesh.addVertices(vertices, indices, true);
 	}
 	else
 	{
@@ -100,12 +100,14 @@ void ResourceLoader::loadTexture(std::string filename, Texture& texture)
 	glBindTexture(GL_TEXTURE_2D, textureID);
  
 	// Set texture clamping method
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
  
 	// Set texture interpolation method to use linear interpolation (no MIPMAPS)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	float color[] = { 1.0f, 0.0f, 0.0f, 1.0f };
+	glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, color);
 
 
 	// Specify the texture specification
@@ -141,16 +143,16 @@ void ResourceLoader::generateWhiteTexture(Texture& texture)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
-
+	unsigned char data[3] = {1,1,1};
 	// Specify the texture specification
 	glTexImage2D(GL_TEXTURE_2D, 				// Type of texture
 				 0,				// Pyramid level (for mip-mapping) - 0 is the top level
-				 GL_RGBA,	// Internal pixel format to use. Can be a generic type like GL_RGB or GL_RGBA, or a sized typew
+				 GL_RGB,	// Internal pixel format to use. Can be a generic type like GL_RGB or GL_RGBA, or a sized typew
 				 1,	// Image width
 				 1,	// Image height
 				 0,				// Border width in pixels (can either be 1 or 0)
 				 GL_RGB,	// Format of image pixel data
 				 GL_UNSIGNED_BYTE,		// Image data type
-				 glm::value_ptr(glm::vec3(1.0, 1.0, 1.0)));			// The actual image data itself
+				 &data);			// The actual image data itself
 	texture.setID(textureID);
 }

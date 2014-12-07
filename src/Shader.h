@@ -14,7 +14,7 @@ public:
 	void addFragmentShader(std::string file);
 	void addGeometryShader(std::string file);
 	void compileShader();
-	virtual void updateUniforms(glm::mat4& worldMatrix, glm::mat4& projectedMatrix, Material& material) = 0;
+	virtual void updateUniforms(glm::mat4& worldMatrix, glm::mat4& projectedMatrix, glm::vec3& eyePos, Material& material) = 0;
 	void bindShader();
 	void addUniform(std::string name);
 	void setUniform(std::string name, int value);

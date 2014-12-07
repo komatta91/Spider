@@ -17,6 +17,7 @@ public:
 	void rotateX(float amount);
 	void rotateY(float amount);
 	glm::mat4 lookAt();
+	inline glm::vec3 getPos() { return pos; }
 
 	static glm::vec3 yAxis;
 private:
