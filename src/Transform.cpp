@@ -20,7 +20,7 @@ glm::mat4 Transform::getTransformation()
 	
 	glm::mat4 translateM = glm::translate(glm::mat4(1.0f), translation);
 
-	return translateM * scaleM * rotationM;
+	return translateM  * rotationM * scaleM;
 }
 
 glm::mat4 Transform::getProjectionTransformation(glm::mat4 lookAt)
