@@ -65,8 +65,8 @@
       <AdditionalDependencies>freeglutd.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy "D:\Programowanie\GKOM\GKOM\Spider\lib\freeglut\bin\freeglutd.dll" d:\Programowanie\GKOM\GKOM\Spider\Debug\freeglut.dll
-copy "D:\Programowanie\GKOM\GKOM\Spider\lib\glew\bin\glew32.dll" d:\Programowanie\GKOM\GKOM\Spider\Debug\glew32.dll</Command>
+      <Command>copy .\lib\freeglut\bin\freeglutd.dll .\Debug\freeglut.dll
+copy .\lib\glew\bin\glew32.dll .\Debug\glew32.dll</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
