@@ -1,7 +1,3 @@
-
-
-
-
 #include<string>
 #include<iostream>
 
@@ -13,7 +9,7 @@
 namespace {
 	static int WIDTH = 800;
 	static int HEIGHT = 600;
-	static std::string TITLE = "Tetris";
+	static std::string TITLE = "Spider";
 }
 
 
@@ -26,7 +22,6 @@ int main(int argc, char* argv[])
 	window.createWindow(WIDTH, HEIGHT, TITLE);
 	Core core(&window, &game);
 	core.start();
-	//system("pause");
 	return 0;
 }
 

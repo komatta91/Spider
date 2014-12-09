@@ -36,29 +36,7 @@ Game::Game(void)
 
 void Game::init()
 {
-	//glm::vec3 res = gl( glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-
 	shader = new PhongShader();
-
-	//vertices.push_back(Vertex(glm::vec3(-1.0f, -1.0f, 0.5773f), glm::vec2(1.0f, 0.0f)));
-	//vertices.push_back(Vertex(glm::vec3(0.0f, -1.0f, -1.15475f), glm::vec2(1.0f, 1.0f)));
-	//vertices.push_back(Vertex(glm::vec3(1.0f, -1.0f, 0.5773f), glm::vec2(1.0f, 0.0f)));
-	//vertices.push_back(Vertex(glm::vec3(0.0f, 1.0f, 0.0f), glm::vec2(0.0f, 1.0f)));
-	/*
-Vertex Vertices[4] = { Vertex(Vector3f(-1.0f, -1.0f, 0.5773f), Vector2f(0.0f, 0.0f)),
-                           Vertex(Vector3f(0.0f, -1.0f, -1.15475f), Vector2f(0.5f, 0.0f)),
-                           Vertex(Vector3f(1.0f, -1.0f, 0.5773f),  Vector2f(1.0f, 0.0f)),
-                           Vertex(Vector3f(0.0f, 1.0f, 0.0f),      Vector2f(0.5f, 1.0f)) };
-
-						    unsigned int Indices[] = { 0, 3, 1,
-                               1, 3, 2,
-                               2, 3, 0,
-                               0, 1, 2 };
-	*/
-	//indices.push_back(0); indices.push_back(3); indices.push_back(1);
-	//indices.push_back(1); indices.push_back(3); indices.push_back(2);
-	//indices.push_back(2); indices.push_back(3); indices.push_back(0);
-	//indices.push_back(0); indices.push_back(1); indices.push_back(2);
 
 	transSky.setProjection(0.1f, 1000.0f, 800.0f, 600.0f, 70.0f); 
 	transFloor.setProjection(0.1f, 1000.0f, 800.0f, 600.0f, 70.0f);
@@ -102,8 +80,6 @@ Vertex Vertices[4] = { Vertex(Vector3f(-1.0f, -1.0f, 0.5773f), Vector2f(0.0f, 0.
 	std::vector<Vertex> vertices;
 	std::vector<int> indices;
 	
-	//generator.CreateBox(1, 1, 1, data);
-	//generator.CreateGeosphere(300, 1000, data);
 	generator.CreateGrid(200,200,2,2,data);
 	for(int i = 0; i < data.Vertices.size(); ++i)
 	{
@@ -190,7 +166,6 @@ Vertex Vertices[4] = { Vertex(Vector3f(-1.0f, -1.0f, 0.5773f), Vector2f(0.0f, 0.
 	meshSpiderAbdomen.addVertices(vertices, indices);
 
 	//SpiderLeg1
-	
 	data = GeometryGenerator::MeshData();
 	vertices.clear();
 	indices.clear();
@@ -209,7 +184,6 @@ Vertex Vertices[4] = { Vertex(Vector3f(-1.0f, -1.0f, 0.5773f), Vector2f(0.0f, 0.
 	meshSpiderLeg1.addVertices(vertices, indices);
 
 	//SpiderLeg2
-	
 	data = GeometryGenerator::MeshData();
 	vertices.clear();
 	indices.clear();
@@ -228,7 +202,6 @@ Vertex Vertices[4] = { Vertex(Vector3f(-1.0f, -1.0f, 0.5773f), Vector2f(0.0f, 0.
 	meshSpiderLeg2.addVertices(vertices, indices);
 
 	//SpiderLeg3
-	
 	data = GeometryGenerator::MeshData();
 	vertices.clear();
 	indices.clear();
@@ -251,7 +224,6 @@ Vertex Vertices[4] = { Vertex(Vector3f(-1.0f, -1.0f, 0.5773f), Vector2f(0.0f, 0.
 	static_cast<PhongShader*>(shader)->setAmbientLight(glm::vec3(0.2f, 0.2f, 0.2f));
 
 	BaseLight base(glm::vec3(1,1,0), 0.5);
-	//DirectionalLight light(base, glm::vec3(0.49,-0.51,-0.710));
 	DirectionalLight light(base, glm::vec3( 0, -1, 0));
 	static_cast<PhongShader*>(shader)->setDirectionalLight(light);
 
@@ -266,8 +238,6 @@ Vertex Vertices[4] = { Vertex(Vector3f(-1.0f, -1.0f, 0.5773f), Vector2f(0.0f, 0.
 	matSpiderEye = new Material("black.bmp", color, 16, 256);
 
 	camera.muve(glm::vec3(0,1,40), 1.5);
-	
-	//material = new Material(color);
 }
 
 
@@ -326,23 +296,15 @@ void Game::input()
 }
 void Game::update()
 {
-	//std::cout << (glm::sin(scale) * - 100) << std::endl;
 	scale += Timer::getInstance().deltaTime();
 
-	//transSky.setTranslation(0.0f, 0.0f, 0);
-	//transform2.setScale(0.45f, 0.45f, 0.45f);
-	//transSky.setRotation(0, 0, 180);
-
 	transFloor.setTranslation(0.0f, -1.0f, 0);
-	//transform.setScale(0.45f, 0.45f, 0.45f);
 	
 	transSpiderHead.setTranslation(0.0f, 7.0f, 0);
 	transSpiderHead.setScale(0.8f, 0.6f, 1.3f);
-	//transSpider.setRotation(0, 0, 180);
 
 	transSpiderAbdomen.setTranslation(1.0f, 10.0f, -20);
 	transSpiderAbdomen.setScale(1.1f, 1.1f, 1.6f);
-	//transSpiderAbdomen.setRotation(0, 0, 180);
 
 	transSpiderLeg11.setTranslation(-16.0f, 10.0f, 10);
 	transSpiderLeg11.setScale(0.5f, 1.8f, 0.5f);
@@ -378,35 +340,27 @@ void Game::update()
 
 	transSpiderLeg21.setTranslation(-27.5f, 14.4f, 14.2f);
 	transSpiderLeg21.setScale(1.2f, 1.2f, 1.2f);
-	//transSpiderLeg21.setRotation(0, -20, -70);
 
 	transSpiderLeg22.setTranslation(-28.5f, 14.5f, 5.0f);
 	transSpiderLeg22.setScale(1.2f, 1.2f, 1.2f);
-	//transSpiderLeg22.setRotation(0, -20, -70);
 
 	transSpiderLeg23.setTranslation(-28.5f, 14.6f, -4.2);
 	transSpiderLeg23.setScale(1.2f, 1.2f, 1.2f);
-	//transSpiderLeg23.setRotation(0, -20, -70);
 
 	transSpiderLeg24.setTranslation(-27.5f, 14.4f, -12.2);
 	transSpiderLeg24.setScale(1.2f, 1.2f, 1.2f);
-	//transSpiderLeg24.setRotation(0, -20, -70);
 
 	transSpiderLeg25.setTranslation(27.5f, 14.4f, 14.2f);
 	transSpiderLeg25.setScale(1.2f, 1.2f, 1.2f);
-	//transSpiderLeg25.setRotation(0, -20, -70);
 
 	transSpiderLeg26.setTranslation(28.5f, 14.5f, 6.2f);
 	transSpiderLeg26.setScale(1.2f, 1.2f, 1.2f);
-	//transSpiderLeg26.setRotation(0, -20, -70);
 
 	transSpiderLeg27.setTranslation(28.5f, 14.4f, -3.1);
 	transSpiderLeg27.setScale(1.2f, 1.2f, 1.2f);
-	//transSpiderLeg27.setRotation(0, -20, -70);
 
 	transSpiderLeg28.setTranslation(27.5f, 14.4f, -12.2);
 	transSpiderLeg28.setScale(1.2f, 1.2f, 1.2f);
-	//transSpiderLeg28.setRotation(0, -20, -70);
 
 
 	transSpiderLeg31.setTranslation(-47.5f, 6.6f, 21.5f);
@@ -444,29 +398,19 @@ void Game::update()
 
 	transSpiderEye1.setTranslation(1.5f, 10.1f, 10.5f);
 	transSpiderEye1.setScale(0.7f, 0.7f, 0.7f);
-	//transSpiderEye1.setRotation(0, 20,70);
 
 	transSpiderEye2.setTranslation(-1.5f, 10.1f, 10.5f);
 	transSpiderEye2.setScale(0.7f, 0.7f, 0.7f);
-	//transSpiderEye2.setRotation(0, 5,70);
 
 	transSpiderEye3.setTranslation(3.0f, 10.3f, 9.5f);
 	transSpiderEye3.setScale(0.5f, 0.5f, 0.5f);
-	//transSpiderEye3.setRotation(0, 20,70);
 
 	transSpiderEye4.setTranslation(-3.0f, 10.3f, 9.5f);
 	transSpiderEye4.setScale(0.5f, 0.5f, 0.5f);
-	//transSpiderEye4.setRotation(0, 5,70);
-
-
-	//BaseLight base(glm::vec3(1,1,1), 1);
-	//DirectionalLight light(base, camera.getForward());
-	//static_cast<PhongShader*>(shader)->setDirectionalLight(light);
 
 	camera.muve(additionPos, Timer::getInstance().deltaTime() * 10);
 	camera.rotateX(amountX * 100);
 	camera.rotateY(amountY * 100);
-	//camera.turn(additioncenter, Timer::getInstance().deltaTime());
 }
 void Game::render()
 {

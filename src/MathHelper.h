@@ -1,9 +1,3 @@
-//***************************************************************************************
-// MathHelper.h Frank Luna (C) 2011 Wszelkie prawa zastrzeżone.
-//
-// Helper math class.
-//***************************************************************************************
-
 #ifndef MATHHELPER_H
 #define MATHHELPER_H
 
@@ -12,13 +6,11 @@
 class MathHelper
 {
 public:
-	// Returns random float in [0, 1).
 	static float RandF()
 	{
 		return (float)(rand()) / (float)RAND_MAX;
 	}
 
-	// Returns random float in [a, b).
 	static float RandF(float a, float b)
 	{
 		return a + RandF()*(b-a);
@@ -48,29 +40,9 @@ public:
 		return x < low ? low : (x > high ? high : x); 
 	}
 
-	// Returns the polar angle of the point (x,y) in [0, 2*PI).
 	static float AngleFromXY(float x, float y);
-
-	/*
-	static XMMATRIX InverseTranspose(CXMMATRIX M)
-	{
-		// Inverse-transpose is just applied to normals.  So zero out 
-		// translation row so that it doesn't get into our inverse-transpose
-		// calculation--we don't want the inverse-transpose of the translation.
-		XMMATRIX A = M;
-		A.r[3] = XMVectorSet(0.0f, 0.0f, 0.0f, 1.0f);
-
-		XMVECTOR det = XMMatrixDeterminant(A);
-		return XMMatrixTranspose(XMMatrixInverse(&det, A));
-	}
-
-	static XMVECTOR RandUnitVec3();
-	static XMVECTOR RandHemisphereUnitVec3(XMVECTOR n);
-	*/
-	static const float Infinity;
+		static const float Infinity;
 	static const float Pi;
-
-
 };
 
 #endif // MATHHELPER_H

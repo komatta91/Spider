@@ -32,7 +32,6 @@ std::string ResourceLoader::loadShader(std::string file)
 
 void ResourceLoader::loadMesh(std::string file, Mesh& mesh)
 {
-	//Mesh mesh;
 	std::string out;
 	std::string line;
 	std::ifstream myfile ("./res/mesh/" + file);
@@ -56,7 +55,6 @@ void ResourceLoader::loadMesh(std::string file, Mesh& mesh)
 				glm::vec3 vec(x, y, z);
 				Vertex v(vec, glm::vec2(glm::abs(x), glm::abs(y)));
 				vertices.push_back(v);
-				//std::cout << "textCord: " << v.getTextCord().x << ", " << v.getTextCord().y << std::endl;
 				
 			}
 			if (line[0] == 'f')
@@ -74,7 +72,6 @@ void ResourceLoader::loadMesh(std::string file, Mesh& mesh)
 				indices.push_back(x);
 				indices.push_back(y);
 				indices.push_back(z);
-				//std::cout << "indices: " << x << ", " << y << ", " << z << std::endl;
 			}
 		}
 		myfile.close();
@@ -93,24 +90,18 @@ void ResourceLoader::loadTexture(std::string filename, Texture& texture)
 
 	GLuint textureID;			// Create a texture ID as a GLuint
 
-	// Generate a new texture
 	glGenTextures(1, &textureID);
  
-	// Bind the texture to a name
 	glBindTexture(GL_TEXTURE_2D, textureID);
  
-	// Set texture clamping method
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
  
-	// Set texture interpolation method to use linear interpolation (no MIPMAPS)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	float color[] = { 1.0f, 0.0f, 0.0f, 1.0f };
 	glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, color);
 
-
-	// Specify the texture specification
 	glTexImage2D(GL_TEXTURE_2D, 				// Type of texture
 				 0,				// Pyramid level (for mip-mapping) - 0 is the top level
 				 GL_RGBA,	// Internal pixel format to use. Can be a generic type like GL_RGB or GL_RGBA, or a sized typew
@@ -121,7 +112,6 @@ void ResourceLoader::loadTexture(std::string filename, Texture& texture)
 				 GL_UNSIGNED_BYTE,		// Image data type
 				 image->pixels);			// The actual image data itself
 	texture.setID(textureID);
-	//return textureID; // Return the GLuint to the texture so you can use it!
 }
 	
 
@@ -129,10 +119,8 @@ void ResourceLoader::generateWhiteTexture(Texture& texture)
 {
 	GLuint textureID;			// Create a texture ID as a GLuint
 
-	// Generate a new texture
 	glGenTextures(1, &textureID);
  
-	// Bind the texture to a name
 	glBindTexture(GL_TEXTURE_2D, textureID);
  
 	// Set texture clamping method
@@ -144,7 +132,6 @@ void ResourceLoader::generateWhiteTexture(Texture& texture)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
 	unsigned char data[3] = {1,1,1};
-	// Specify the texture specification
 	glTexImage2D(GL_TEXTURE_2D, 				// Type of texture
 				 0,				// Pyramid level (for mip-mapping) - 0 is the top level
 				 GL_RGB,	// Internal pixel format to use. Can be a generic type like GL_RGB or GL_RGBA, or a sized typew

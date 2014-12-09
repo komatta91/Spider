@@ -9,7 +9,6 @@ public:
 	~Camera(void);
 
 	void muve(glm::vec3 direction, float amount);
-	//void turn(glm::vec3 direction, float amount);
 	glm::vec3 getLeft();
 	glm::vec3 getRight();
 	glm::vec3 getForward();

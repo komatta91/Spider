@@ -6,7 +6,6 @@
 
 Camera::Camera(glm::vec3 pos, glm::vec3 forward, glm::vec3 up) : pos(pos), forward(forward), up(up)
 {
-	//forward = glm::normalize();
 	up = glm::normalize(glm::vec3(0.0f, 1.0f, 0.0f));
 }
 
@@ -56,7 +55,6 @@ void Camera::rotateY(float amount)
 
 glm::mat4 Camera::lookAt()
 {
-	//std::cout  << pos.x << " " << pos.y << " "<< pos.z << "    " << forward.x << " " << forward.y << " "<< forward.z  << std::endl;
 	return glm::lookAt(pos, pos + forward, yAxis);
 }
 

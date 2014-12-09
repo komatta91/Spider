@@ -19,7 +19,7 @@ BasicShader::~BasicShader(void)
 
 void BasicShader::updateUniforms(glm::mat4& worldMatrix, glm::mat4& projectedMatrix, Material& material)
 {
-	setUniform("transform", projectedMatrix);//transform.getProjectionTransformation(camera.lookAt()));
+	setUniform("transform", projectedMatrix);
 	setUniform("sampler", 0);
 	setUniform("color", material.getColor());
 

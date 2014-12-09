@@ -10,7 +10,7 @@ namespace
 bool closeRequested = true;
 }
 
-Window::Window() //: windowID(0)
+Window::Window()
 {
 	closeRequested = false;
 }
@@ -34,7 +34,6 @@ void Window::createWindow(int width, int height, std::string title)
 	glutInitWindowSize(width, height);
 	glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_CONTINUE_EXECUTION);
 	glutCreateWindow( title.c_str() );
-	//glutDisplayFunc( render );
 	glutWMCloseFunc( onClosing );
 
 }

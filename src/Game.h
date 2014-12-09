@@ -42,7 +42,6 @@ private:
 
 	Mesh meshSpiderAbdomen;
 	Transform transSpiderAbdomen;
-	//Material* matSpiderAbdomen;
 
 	Mesh meshSpiderLeg1;
 	Transform transSpiderLeg11;
@@ -74,23 +73,13 @@ private:
 	Transform transSpiderLeg37;
 	Transform transSpiderLeg38;
 
-
 	Transform transSpiderEye1;
 	Transform transSpiderEye2;
 	Transform transSpiderEye3;
 	Transform transSpiderEye4;
-	//Material* matSpiderLeg1;
 
 	std::vector<std::pair<Transform, Mesh>> spider;
-
-
-
 	Shader* shader;
-	
-	
 	Camera camera;
-	//Texture texture;
-	
-	
 };
 

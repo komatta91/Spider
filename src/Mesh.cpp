@@ -26,11 +26,6 @@ void Mesh::addVertices(std::vector<Vertex> &vertices, std::vector<int> &indices,
 	glGenBuffers(1, &ibo);
 
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	//std::vector<float> onlyVertices;
-	//for (Vertex& v : vertices) {  onlyVertices.push_back(v.getPos().x); onlyVertices.push_back(v.getPos().y);onlyVertices.push_back(v.getPos()v.getPos().z; }
-	//void* addr = &vertices[0];
-
-	//float* test = &vertices[0];
 
 	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW);
 
@@ -46,7 +41,6 @@ void Mesh::draw()
 
 
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	//int temp = 12;
 	glVertexAttribPointer(0, 3, GL_FLOAT, false, sizeof(Vertex), BUFFER_OFFSET(0));
 	glVertexAttribPointer(1, 2, GL_FLOAT, false, sizeof(Vertex), BUFFER_OFFSET(12));
 	glVertexAttribPointer(2, 3, GL_FLOAT, false, sizeof(Vertex), BUFFER_OFFSET(20));
@@ -75,9 +69,7 @@ void Mesh::calcNormals(std::vector<Vertex> &vertices, std::vector<int> &indices)
 		glm::vec3 t1 = p1 - p0;
 
 		glm::vec3 t2 = p2 - p0;
-
-		//glm::vec3 normal =  glm::normalize(glm::cross(t2, t1));
-
+		
 		glm::vec3 normal =  glm::cross(t2, t1);
 
 		vertices[i0].setNormal(vertices[i0].getNormal() + normal);
@@ -88,6 +80,5 @@ void Mesh::calcNormals(std::vector<Vertex> &vertices, std::vector<int> &indices)
 	for (int i = 0; i < vertices.size(); ++i)
 	{
 		vertices[i].setNormal(glm::normalize(vertices[i].getPos()));
-		//vertices[i].setNormal(glm::normalize(vertices[i].getNormal()));
 	}
 }

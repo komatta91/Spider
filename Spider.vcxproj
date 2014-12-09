@@ -14,6 +14,7 @@
     <ProjectGuid>{09FA9605-BE19-4F63-A104-3EBB9479BC54}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Tetris</RootNamespace>
+    <ProjectName>Spider</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -64,8 +65,8 @@
       <AdditionalDependencies>freeglutd.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy "D:\Programowanie\GKOM\GKOM\Tetris\lib\freeglut\bin\freeglutd.dll" d:\Programowanie\GKOM\GKOM\Tetris\Debug\freeglut.dll
-copy "D:\Programowanie\GKOM\GKOM\Tetris\lib\glew\bin\glew32.dll" d:\Programowanie\GKOM\GKOM\Tetris\Debug\glew32.dll</Command>
+      <Command>copy "D:\Programowanie\GKOM\GKOM\Spider\lib\freeglut\bin\freeglutd.dll" d:\Programowanie\GKOM\GKOM\Spider\Debug\freeglut.dll
+copy "D:\Programowanie\GKOM\GKOM\Spider\lib\glew\bin\glew32.dll" d:\Programowanie\GKOM\GKOM\Spider\Debug\glew32.dll</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

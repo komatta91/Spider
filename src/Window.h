@@ -12,7 +12,6 @@ public:
 
 private:
 	static void onClosing();
-	//int windowID;
 };
 
 

@@ -28,9 +28,9 @@ glm::mat4 Transform::getProjectionTransformation(glm::mat4 lookAt)
 
 	glm::mat4 perspective = glm::perspective(fov, width/height, zNear, zFar);
 
-	glm::mat4 perspective2 = glm::mat4(1.0f);//glm::perspective(fov, width/height, zNear, zFar);
+	glm::mat4 perspective2 = glm::mat4(1.0f);
 
-	return   perspective * lookAt * getTransformation();//* perspective;
+	return   perspective * lookAt * getTransformation();
 }
 
 void Transform::setProjection(float zNearin, float zFarin, float widthin, float heightin, float fovin)

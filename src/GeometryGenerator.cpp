@@ -1,8 +1,4 @@
-﻿//***************************************************************************************
-// GeometryGenerator.cpp Frank Luna (C) 2011 Wszelkie prawa zastrzeżone.
-//***************************************************************************************
-
-#include "GeometryGenerator.h"
+﻿#include "GeometryGenerator.h"
 
 #include <MathHelper.h>
 
@@ -12,9 +8,6 @@
 
 void GeometryGenerator::CreateBox(float width, float height, float depth, MeshData& meshData)
 {
-	//
-	// Create the vertices.
-	//
 
 	Vertex v[24];
 
@@ -60,10 +53,6 @@ void GeometryGenerator::CreateBox(float width, float height, float depth, MeshDa
 
 	meshData.Vertices.assign(&v[0], &v[24]);
  
-	//
-	// Create the indices.
-	//
-
 	UINT i[36];
 
 	// Fill in the front face index data
@@ -95,10 +84,6 @@ void GeometryGenerator::CreateBox(float width, float height, float depth, MeshDa
 
 void GeometryGenerator::CreateSkyBox(float width, float height, float depth, MeshData& meshData)
 {
-	//
-	// Create the vertices.
-	//
-
 	Vertex v[24];
 
 	float w2 = 0.5f*width;
@@ -143,10 +128,6 @@ void GeometryGenerator::CreateSkyBox(float width, float height, float depth, Mes
 
 	meshData.Vertices.assign(&v[0], &v[24]);
  
-	//
-	// Create the indices.
-	//
-
 	UINT i[36];
 
 	// Fill in the front face index data
@@ -181,13 +162,6 @@ void GeometryGenerator::CreateSphere(float radius, UINT sliceCount, UINT stackCo
 	meshData.Vertices.clear();
 	meshData.Indices.clear();
 
-	//
-	// Compute the vertices stating at the top pole and moving down the stacks.
-	//
-
-	// Poles: note that there will be texture coordinate distortion as there is
-	// not a unique point on the texture map to assign to the pole when mapping
-	// a rectangular texture onto a sphere.
 	Vertex topVertex(0.0f, +radius, 0.0f, 0.0f, +1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f);
 	Vertex bottomVertex(0.0f, -radius, 0.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f);
 
@@ -196,32 +170,26 @@ void GeometryGenerator::CreateSphere(float radius, UINT sliceCount, UINT stackCo
 	float phiStep   = XM_PI/stackCount;
 	float thetaStep = 2.0f*XM_PI/sliceCount;
 
-	// Compute vertices for each stack ring (do not count the poles as rings).
 	for(UINT i = 1; i <= stackCount-1; ++i)
 	{
 		float phi = i*phiStep;
 
-		// Vertices of ring.
 		for(UINT j = 0; j <= sliceCount; ++j)
 		{
 			float theta = j*thetaStep;
 
 			Vertex v;
 
-			// spherical to cartesian
 			v.Position.x = radius*sinf(phi)*cosf(theta);
 			v.Position.y = radius*cosf(phi);
 			v.Position.z = radius*sinf(phi)*sinf(theta);
 
-			// Partial derivative of P with respect to theta
 			v.TangentU.x = -radius*sinf(phi)*sinf(theta);
 			v.TangentU.y = 0.0f;
 			v.TangentU.z = +radius*sinf(phi)*cosf(theta);
 
 			v.TangentU = glm::normalize(v.TangentU);
-			//XMStoreFloat3(&v.TangentU, XMVector3Normalize(T));
 
-			//glm::vec3 p = XMLoadFloat3(&v.Position);
 			v.Normal = glm::normalize(v.Position);
 
 			v.TexC.x = theta / (2.0f * glm::pi<float>());
@@ -233,11 +201,6 @@ void GeometryGenerator::CreateSphere(float radius, UINT sliceCount, UINT stackCo
 
 	meshData.Vertices.push_back( bottomVertex );
 
-	//
-	// Compute indices for top stack.  The top stack was written first to the vertex buffer
-	// and connects the top pole to the first ring.
-	//
-
 	for(UINT i = 1; i <= sliceCount; ++i)
 	{
 		meshData.Indices.push_back(0);
@@ -245,12 +208,6 @@ void GeometryGenerator::CreateSphere(float radius, UINT sliceCount, UINT stackCo
 		meshData.Indices.push_back(i);
 	}
 	
-	//
-	// Compute indices for inner stacks (not connected to poles).
-	//
-
-	// Offset the indices to the index of the first vertex in the first ring.
-	// This is just skipping the top pole vertex.
 	UINT baseIndex = 1;
 	UINT ringVertexCount = sliceCount+1;
 	for(UINT i = 0; i < stackCount-2; ++i)
@@ -267,15 +224,8 @@ void GeometryGenerator::CreateSphere(float radius, UINT sliceCount, UINT stackCo
 		}
 	}
 
-	//
-	// Compute indices for bottom stack.  The bottom stack was written last to the vertex buffer
-	// and connects the bottom pole to the bottom ring.
-	//
-
-	// South pole vertex was added last.
 	UINT southPoleIndex = (UINT)meshData.Vertices.size()-1;
 
-	// Offset the indices to the index of the first vertex in the last ring.
 	baseIndex = southPoleIndex - ringVertexCount;
 	
 	for(UINT i = 0; i < sliceCount; ++i)
@@ -288,7 +238,6 @@ void GeometryGenerator::CreateSphere(float radius, UINT sliceCount, UINT stackCo
  
 void GeometryGenerator::Subdivide(MeshData& meshData)
 {
-	// Save a copy of the input geometry.
 	MeshData inputCopy = meshData;
 
 
@@ -312,14 +261,7 @@ void GeometryGenerator::Subdivide(MeshData& meshData)
 		Vertex v1 = inputCopy.Vertices[ inputCopy.Indices[i*3+1] ];
 		Vertex v2 = inputCopy.Vertices[ inputCopy.Indices[i*3+2] ];
 
-		//
-		// Generate the midpoints.
-		//
-
 		Vertex m0, m1, m2;
-
-		// For subdivision, we just care about the position component.  We derive the other
-		// vertex components in CreateGeosphere.
 
 		m0.Position = glm::vec3(
 			0.5f*(v0.Position.x + v1.Position.x),
@@ -335,10 +277,6 @@ void GeometryGenerator::Subdivide(MeshData& meshData)
 			0.5f*(v0.Position.x + v2.Position.x),
 			0.5f*(v0.Position.y + v2.Position.y),
 			0.5f*(v0.Position.z + v2.Position.z));
-
-		//
-		// Add new geometry.
-		//
 
 		meshData.Vertices.push_back(v0); // 0
 		meshData.Vertices.push_back(v1); // 1
@@ -367,10 +305,7 @@ void GeometryGenerator::Subdivide(MeshData& meshData)
 
 void GeometryGenerator::CreateGeosphere(float radius, UINT numSubdivisions, MeshData& meshData)
 {
-	// Put a cap on the number of subdivisions.
 	numSubdivisions = MathHelper::Min(numSubdivisions, 5u);
-
-	// Approximate a sphere by tessellating an icosahedron.
 
 	const float X = 0.525731f; 
 	const float Z = 0.850651f;
@@ -405,19 +340,15 @@ void GeometryGenerator::CreateGeosphere(float radius, UINT numSubdivisions, Mesh
 	for(UINT i = 0; i < numSubdivisions; ++i)
 		Subdivide(meshData);
 
-	// Project vertices onto sphere and scale.
 	for(UINT i = 0; i < meshData.Vertices.size(); ++i)
 	{
-		// Project onto unit sphere.
 		glm::vec3 n = glm::normalize(meshData.Vertices[i].Position);
 
-		// Project onto sphere.
 		glm::vec3 p = radius*n;
 
 		meshData.Vertices[i].Position = p;
 		meshData.Vertices[i].Normal = n;
 
-		// Derive texture coordinates from spherical coordinates.
 		float theta = MathHelper::AngleFromXY(
 			meshData.Vertices[i].Position.x, 
 			meshData.Vertices[i].Position.z);
@@ -427,7 +358,6 @@ void GeometryGenerator::CreateGeosphere(float radius, UINT numSubdivisions, Mesh
 		meshData.Vertices[i].TexC.x = theta/(XM_PI * 2.0f);
 		meshData.Vertices[i].TexC.y = phi/XM_PI;
 
-		// Partial derivative of P with respect to theta
 		meshData.Vertices[i].TangentU.x = -radius*sinf(phi)*sinf(theta);
 		meshData.Vertices[i].TangentU.y = 0.0f;
 		meshData.Vertices[i].TangentU.z = +radius*sinf(phi)*cosf(theta);
@@ -442,24 +372,17 @@ void GeometryGenerator::CreateCylinder(float bottomRadius, float topRadius, floa
 	meshData.Vertices.clear();
 	meshData.Indices.clear();
 
-	//
-	// Build Stacks.
-	// 
-
 	float stackHeight = height / stackCount;
 
-	// Amount to increment radius as we move up each stack level from bottom to top.
 	float radiusStep = (topRadius - bottomRadius) / stackCount;
 
 	UINT ringCount = stackCount+1;
 
-	// Compute vertices for each stack ring starting at the bottom and moving up.
 	for(UINT i = 0; i < ringCount; ++i)
 	{
 		float y = -0.5f*height + i*stackHeight;
 		float r = bottomRadius + i*radiusStep;
 
-		// vertices of ring
 		float dTheta = 2.0f*XM_PI/sliceCount;
 		for(UINT j = 0; j <= sliceCount; ++j)
 		{
@@ -473,26 +396,6 @@ void GeometryGenerator::CreateCylinder(float bottomRadius, float topRadius, floa
 			vertex.TexC.x = (float)j/sliceCount;
 			vertex.TexC.y = 1.0f - (float)i/stackCount;
 
-			// Cylinder can be parameterized as follows, where we introduce v
-			// parameter that goes in the same direction as the v tex-coord
-			// so that the bitangent goes in the same direction as the v tex-coord.
-			//   Let r0 be the bottom radius and let r1 be the top radius.
-			//   y(v) = h - hv for v in [0,1].
-			//   r(v) = r1 + (r0-r1)v
-			//
-			//   x(t, v) = r(v)*cos(t)
-			//   y(t, v) = h - hv
-			//   z(t, v) = r(v)*sin(t)
-			// 
-			//  dx/dt = -r(v)*sin(t)
-			//  dy/dt = 0
-			//  dz/dt = +r(v)*cos(t)
-			//
-			//  dx/dv = (r0-r1)*cos(t)
-			//  dy/dv = -h
-			//  dz/dv = (r0-r1)*sin(t)
-
-			// This is unit length.
 			vertex.TangentU = glm::vec3(-s, 0.0f, c);
 
 			float dr = bottomRadius-topRadius;
@@ -507,11 +410,8 @@ void GeometryGenerator::CreateCylinder(float bottomRadius, float topRadius, floa
 		}
 	}
 
-	// Add one because we duplicate the first and last vertex per ring
-	// since the texture coordinates are different.
 	UINT ringVertexCount = sliceCount+1;
 
-	// Compute indices for each stack.
 	for(UINT i = 0; i < stackCount; ++i)
 	{
 		for(UINT j = 0; j < sliceCount; ++j)
@@ -538,24 +438,19 @@ void GeometryGenerator::BuildCylinderTopCap(float bottomRadius, float topRadius,
 	float y = 0.5f*height;
 	float dTheta = 2.0f*XM_PI/sliceCount;
 
-	// Duplicate cap ring vertices because the texture coordinates and normals differ.
 	for(UINT i = 0; i <= sliceCount; ++i)
 	{
 		float x = topRadius*cosf(i*dTheta);
 		float z = topRadius*sinf(i*dTheta);
 
-		// Scale down by the height to try and make top cap texture coord area
-		// proportional to base.
 		float u = x/height + 0.5f;
 		float v = z/height + 0.5f;
 
 		meshData.Vertices.push_back( Vertex(x, y, z, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, u, v) );
 	}
 
-	// Cap center vertex.
 	meshData.Vertices.push_back( Vertex(0.0f, y, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.5f, 0.5f) );
 
-	// Index of center vertex.
 	UINT centerIndex = (UINT)meshData.Vertices.size()-1;
 
 	for(UINT i = 0; i < sliceCount; ++i)
@@ -569,32 +464,23 @@ void GeometryGenerator::BuildCylinderTopCap(float bottomRadius, float topRadius,
 void GeometryGenerator::BuildCylinderBottomCap(float bottomRadius, float topRadius, float height, 
 											   UINT sliceCount, UINT stackCount, MeshData& meshData)
 {
-	// 
-	// Build bottom cap.
-	//
-
 	UINT baseIndex = (UINT)meshData.Vertices.size();
 	float y = -0.5f*height;
 
-	// vertices of ring
 	float dTheta = 2.0f*XM_PI/sliceCount;
 	for(UINT i = 0; i <= sliceCount; ++i)
 	{
 		float x = bottomRadius*cosf(i*dTheta);
 		float z = bottomRadius*sinf(i*dTheta);
 
-		// Scale down by the height to try and make top cap texture coord area
-		// proportional to base.
 		float u = x/height + 0.5f;
 		float v = z/height + 0.5f;
 
 		meshData.Vertices.push_back( Vertex(x, y, z, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f, 0.0f, u, v) );
 	}
 
-	// Cap center vertex.
 	meshData.Vertices.push_back( Vertex(0.0f, y, 0.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.5f, 0.5f) );
 
-	// Cache the index of center vertex.
 	UINT centerIndex = (UINT)meshData.Vertices.size()-1;
 
 	for(UINT i = 0; i < sliceCount; ++i)
@@ -609,10 +495,6 @@ void GeometryGenerator::CreateGrid(float width, float depth, UINT m, UINT n, Mes
 {
 	UINT vertexCount = m*n;
 	UINT faceCount   = (m-1)*(n-1)*2;
-
-	//
-	// Create the vertices.
-	//
 
 	float halfWidth = 0.5f*width;
 	float halfDepth = 0.5f*depth;
@@ -635,19 +517,13 @@ void GeometryGenerator::CreateGrid(float width, float depth, UINT m, UINT n, Mes
 			meshData.Vertices[i*n+j].Normal   = glm::vec3(0.0f, 1.0f, 0.0f);
 			meshData.Vertices[i*n+j].TangentU = glm::vec3(1.0f, 0.0f, 0.0f);
 
-			// Rozciągnij teksturę na powierzchni siatki.
 			meshData.Vertices[i*n+j].TexC.x = j*du;
 			meshData.Vertices[i*n+j].TexC.y = i*dv;
 		}
 	}
  
-    //
-	// Create the indices.
-	//
-
 	meshData.Indices.resize(faceCount*3); // 3 indices per face
 
-	// Przetwarzaj czworokąty iteracyjnie, obliczając indeksy
 	UINT k = 0;
 	for(UINT i = 0; i < m-1; ++i)
 	{
@@ -671,7 +547,6 @@ void GeometryGenerator::CreateFullscreenQuad(MeshData& meshData)
 	meshData.Vertices.resize(4);
 	meshData.Indices.resize(6);
 
-	// Position coordinates specified in NDC space.
 	meshData.Vertices[0] = Vertex(
 		-1.0f, -1.0f, 0.0f, 
 		0.0f, 0.0f, -1.0f,

@@ -30,7 +30,7 @@ PhongShader::~PhongShader(void)
 
 void PhongShader::updateUniforms(glm::mat4& worldMatrix, glm::mat4& projectedMatrix, glm::vec3& eyePos, Material& material)
 {
-	Shader::setUniform("transformProjected", projectedMatrix);//transform.getProjectionTransformation(camera.lookAt()));
+	Shader::setUniform("transformProjected", projectedMatrix);
 	Shader::setUniform("transform", worldMatrix);
 	Shader::setUniform("sampler", 0);
 	Shader::setUniform("baseColor", material.getColor());
